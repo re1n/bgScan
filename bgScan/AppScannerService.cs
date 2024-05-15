@@ -74,6 +74,7 @@ public class AppScannerService : BackgroundService
                     string version = subkey.GetValue("DisplayVersion") as string;
                     if (!string.IsNullOrEmpty(name))
                     {
+                        _logger.LogInformation("found something");
                         apps.Add(new AppInfo
                         {
                             Name = name,
@@ -107,6 +108,7 @@ public class AppScannerService : BackgroundService
                 {
                     if (apps.Find(a => a.Name == parts[0]) == null)
                     {
+                        _logger.LogInformation("found something else");
                         apps.Add(new AppInfo
                         {
                             Name = parts[0],

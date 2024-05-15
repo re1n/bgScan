@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -23,27 +22,17 @@ public class Program
         Host.CreateDefaultBuilder(args)
             .ConfigureLogging((context, logging) =>
             {
-                logging.ClearProviders();
-                try
+                if (!Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs")))
                 {
-                    logging.AddSimpleConsole(options =>
-                    {
-                        options.SingleLine = true;
-                    });
+                    Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs"));
                 }
-                catch (Exception e)
-                {
-                    ; // Stop crash when in non-console env
-                }
-                if (!Directory.Exists("logs"))
-                {
-                    Directory.CreateDirectory("logs");
-                }
-                logging.AddFile("logs/app.log");
+                logging.AddFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs/app.log"));
+                logging.AddEventLog();
             })
             .ConfigureServices((hostContext, services) =>
             {
                 services.AddSingleton<LiteDbContext>();
                 services.AddHostedService<AppScannerService>();
-            });
+            })
+            .UseWindowsService();
 }

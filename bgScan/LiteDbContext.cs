@@ -7,7 +7,7 @@ public class LiteDbContext
 
     public LiteDbContext()
     {
-        _db = new LiteDatabase("apps.db");
+        _db = new LiteDatabase(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "apps.db"));
     }
 
     public ILiteCollection<AppInfo> Apps => _db.GetCollection<AppInfo>("apps");
