@@ -1,2 +1,0 @@
-D:\Documents\Repos\bgScan\bgScan\bgScan\bin\Release\net6.0\win-x64\publish\bgScan.pdb
-D:\Documents\Repos\bgScan\bgScan\bgScan\bin\Release\net6.0\win-x64\publish\bgScan.exe
